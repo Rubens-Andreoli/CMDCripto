@@ -99,48 +99,34 @@
 
 1447293344 c:\users\morus\desktop\aps v2.2.0\cripto.h
 
-1447376544 source:c:\users\morus\desktop\aps v2.1.1\main.c
+1447302401 source:c:\users\morus\desktop\aps v2.2.0 [off]\main.c
 	<stdio.h>
 	<stdlib.h>
 	"interface.h"
 	"filesio.h"
 	"cripto.h"
 
-1447290170 c:\users\morus\desktop\aps v2.1.1\interface.h
+1447290170 c:\users\morus\desktop\aps v2.2.0 [off]\interface.h
 	<string.h>
 
-1447376643 c:\users\morus\desktop\aps v2.1.1\filesio.h
+1447302171 c:\users\morus\desktop\aps v2.2.0 [off]\filesio.h
 	<dirent.h>
 
-1447293344 c:\users\morus\desktop\aps v2.1.1\cripto.h
+1447293344 c:\users\morus\desktop\aps v2.2.0 [off]\cripto.h
 
-1447434778 source:f:\aps\aps v2.1.2\main.c
+1447306452 source:c:\users\morus\desktop\aps v2.2.2\main.c
 	<stdio.h>
 	<stdlib.h>
 	"interface.h"
 	"filesio.h"
 	"cripto.h"
 
-1447434368 f:\aps\aps v2.1.2\interface.h
+1447290170 c:\users\morus\desktop\aps v2.2.2\interface.h
 	<string.h>
 
-1447381898 f:\aps\aps v2.1.2\filesio.h
+1447379282 c:\users\morus\desktop\aps v2.2.2\filesio.h
 	<dirent.h>
+	<ctype.h>
 
-1447435916 f:\aps\aps v2.1.2\cripto.h
-
-1447434778 source:d:\computação\linguagens\c\aps - criptografia\aps v2.1.2\main.c
-	<stdio.h>
-	<stdlib.h>
-	"interface.h"
-	"filesio.h"
-	"cripto.h"
-
-1447434368 d:\computação\linguagens\c\aps - criptografia\aps v2.1.2\interface.h
-	<string.h>
-
-1447381898 d:\computação\linguagens\c\aps - criptografia\aps v2.1.2\filesio.h
-	<dirent.h>
-
-1447435916 d:\computação\linguagens\c\aps - criptografia\aps v2.1.2\cripto.h
+1447293344 c:\users\morus\desktop\aps v2.2.2\cripto.h
 

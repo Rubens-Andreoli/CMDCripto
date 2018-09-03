@@ -1,4 +1,5 @@
 #include <dirent.h>
+#include <ctype.h>
 
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define BAN_LETTERS "àáâãÀÁÂÃèéêÈÉÊìíîÌÍÎòóôõÒÓÔÕúùûüÙÚÛÜçÇ"
@@ -6,6 +7,7 @@
 #define LETTERS_SIZE 38
 #define FOLDER "./texts/"
 #define FILENAM_MAX 50
+#define FILENAM_MIN 3
 #define FILENUM_MAX 20
 #define CHAR_MAX 6001
 #define LINE_MAX 60
@@ -93,4 +95,24 @@ int writeFile(char text[LINE_MAX][CHAR_MAX], int lineTotal, char filename[FILENA
     }
     fclose(ptr_file);
     return 1;
+}
+
+/**Repete questão ate receber nome do arquivo sem caracteres especiais ou acentuados e com mais de 3 caracteres.*/
+void createFilename(char fileName[FILENAM_MAX]){
+   int pos=0, isInvalid;
+   do{
+        isInvalid=0
+        printf("Digite o nome do arquivo [%d-%d caracteres] para salvar seu texto: ", FILENAM_MIN, FILENAM_MAX);
+        fflush(stdin);
+        fgets(fileName, FILENAM_MAX, stdin);
+        strtok(fileName, "\n");
+        while(pos<strlen(fileName) && isInvalid==0){
+            if(!isalpha(fileName[pos]) && !isdigit(fileName[pos])){
+                printf("Nao utilize caracteres acentuados ou especiais.\n");
+                isInvalid=1;
+            }
+            pos++;
+        }
+        strcat(fileName, FILETYPE);
+    }while(strlen(fileName) < FILENAM_MIN || isInvalid !=0);
 }
