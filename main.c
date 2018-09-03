@@ -2,11 +2,13 @@
 #include <stdlib.h>
 #include "interface.h"
 #include "filesio.h"
+#include "cripto.h"
 
 int main()
 {
-    int menuChoice=0, fileNumTotal=0, fileChoice=0, lineTotal=0;
-    char files[FILENUM_MAX][FILENAM_MAX], text[LINE_MAX][CHAR_MAX], question[QUESTION_SIZE];
+    int menuChoice=0, fileNumTotal=0, fileChoice=0, lineTotal=0, table[TABLE_ORDER][TABLE_ORDER];
+    char files[FILENUM_MAX][FILENAM_MAX], text[LINE_MAX][CHAR_MAX], question[QUESTION_SIZE], pass[MAX_PASS_SIZE+1];
+    double tableInv[TABLE_ORDER][TABLE_ORDER];
 
     while (menuChoice != 7){
         topBox("MENU", 1);
@@ -28,9 +30,9 @@ int main()
                 if(fileNumTotal != 0){
                     blankLine(1);
                     sprintf(question, "Digite a opcao referente ao arquivo desejado (1-%d): ", MIN(FILENUM_MAX, fileNumTotal));
-                    fileChoice = chooseValue(question, MIN(FILENUM_MAX, fileNumTotal))-1;
-                    printf("Arquivo [%s] selecionado. ", files[fileChoice]);
-                    lineTotal = readFile(text, files[fileChoice]);
+                    fileChoice = chooseValue(question, MIN(FILENUM_MAX, fileNumTotal));
+                    printf("Arquivo [%s] selecionado.", files[fileChoice-1]);
+                    lineTotal = readFile(text, files[fileChoice-1]);
                 }else{
                     printf("Nenhum arquivo foi encontrado. ");
                 }
@@ -43,7 +45,7 @@ int main()
                     showText(text, lineTotal);
                     printf("\n");
                     blankLine(2);
-                    printf("O arquivo [%s] foi exibido. ", files[fileChoice]);
+                    printf("O arquivo [%s] foi exibido. ", files[fileChoice-1]);
                 }else{
                     printf("Nenhum arquivo foi selecionado. ");
                 }
@@ -51,18 +53,41 @@ int main()
                 break;
             case 3:
                 topBox("CRIPTOGRAFAR", 2);
-                //pedir senha; converter e testar senha; criptografar texto, salvar arquivo
+                if(fileChoice == 0){
+                    printf("Nenhum arquivo foi selecionado. ");
+                }else if(lineTotal == 0){
+                    printf("Nenhum texto encontrado no arquivo. ");
+                }else{
+                    createPass(pass);
+                    passToTable(pass, table);
+                    makeInvertible(table);
+                    encrypt(text, lineTotal, table);
+                    //TODO: criptografar texto, salvar arquivo.
+                }
+                printf("\n");
                 waitPress();
                 break;
             case 4:
                 topBox("DESCRIPTOGRAFAR", 2);
-                //pedir senha; converter senha; descriptografar texto; salvar arquivo
+                if(fileChoice == 0){
+                    printf("Nenhum arquivo foi selecionado. ");
+                }else if(lineTotal == 0){
+                    printf("Nenhum texto encontrado no arquivo. ");
+                }else{
+                    createPass(pass);
+                    passToTable(pass, table);
+                    makeInvertible(table);
+                    printf("DET:%d\n",determinant(table));
+                    invert(table,determinant(table),tableInv);
+                    decrypt(text, lineTotal, tableInv);
+                    //TODO: descriptografar texto; salvar arquivo.
+                }
                 waitPress();
                 break;
             case 5:
                 topBox("AJUDA", 2);
                 printf("***SELECIONAR ARQUIVO***\n"
-                       "-LISTA TODOS OS ARQUIVOS DE TEXTO [.TXT] NA PASTA \"TEXTOS\", CONTIDA NA PASTA RAIZ DO PROGRAMA,"
+                       "-LISTA TODOS OS ARQUIVOS DE TEXTO [%s] NA PASTA \"%s\", CONTIDA NA PASTA RAIZ DO PROGRAMA,"
                        " PERMITINDO AO USUARIO ESCOLHER QUAL SERA LIDO PARA SER CRIPTOGRAFADO OU DESCRIPTOGRAFADO.\n\n"
                        "***VISUALIZAR ARQUIVO***\n"
                        "-PERMITE AO USUARIO VISUALIZAR O TEXTO EXTRAIDO DO ARQUIVO SELECIONADO."
@@ -74,7 +99,7 @@ int main()
                        "***SOBRE***\n"
                        "-INFORMACOES ACADEMICAS DO PROJETO.\n\n"
                        "***SAIR***\n"
-                       "-ENCERRA O APLICATIVO.\n\n");
+                       "-ENCERRA O APLICATIVO.\n\n", FILETYPE, FOLDER);
                 blankLine(2);
                 waitPress();
                 break;
@@ -82,10 +107,10 @@ int main()
                 topBox("SOBRE", 2);
                 printf("SOFTWARE PROJETADO PARA A DISCIPLINA APS (ATIVIDADES PRATICAS SUPERVISIONADAS).\n"
                        "CURSO: CIENCIA DA COMPUTACAO --- TURMA: CC2P18 / CC2Q18 --- UNIP CAMPUS VARGAS\n\n"
-                       "GUILHERME	RA\n"
-                       "GUSTAVO		RA\n"
-                       "MURILO		RA\n"
-                       "RUBENS		RA\n"
+                       "GUILHERME	C59386-9\n"
+                       "GUSTAVO		C64211-8\n"
+                       "MURILO		C42HIH-4\n"
+                       "RUBENS		T49128-2\n"
                        "\nESTE SOFTWARE FOI DESENVOLVIDO EM LINGUAGEM DE PROGRAMACAO ESTRUTURADA (\"C\") E TEM COMO"
                        " OBJETIVO UTILIZAR TECNICAS DE CRIPTOGRAFIA PARA CRIPTOGRAFAR E DESCRIPTOGRAFAR UMA MENSAGEM"
                        " PREVIAMENTE INSERIDA EM UM ARQUIVO DE TEXTO UTILIZANDO PARA ISSO A CIFRA DE HILL.\n");

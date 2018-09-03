@@ -2,8 +2,8 @@
 
 #define UI_SIZE 80
 #define UI_TEXT_SIZE 30
-#define SIDE_CHAR '|'
-#define LINE_CHAR '-'
+#define SIDE_CHAR 186
+#define LINE_CHAR 205
 #define QUESTION_SIZE 60
 #define MENU_ALIGN -1
 
@@ -36,21 +36,18 @@ void textLine(char text[UI_TEXT_SIZE], int pos){
             }
             spaces = (UI_SIZE - 2 - textSize) / 2;
             printf("%c", SIDE_CHAR);
-            for(i = 0; i < spaces; i++){
+            for(i = 0; i < spaces; i++)
                 printf(" ");
-            }
             printf("%s", text);
-            for(i = 0; i < spaces+isOdd; i++){
+            for(i = 0; i < spaces+isOdd; i++)
                 printf(" ");
-            }
             printf("%c", SIDE_CHAR);
             break;
         case 1:
             printf("%c", SIDE_CHAR);
             spaces = UI_SIZE-textSize-4;
-            for(i = 0; i < spaces; i++){
+            for(i = 0; i < spaces; i++)
                 printf(" ");
-            }
             printf("%s", text);
             printf("  %c", SIDE_CHAR);
             break;
@@ -66,10 +63,10 @@ void topBox(char text[UI_TEXT_SIZE], int bottomLines){
 }
 
 /**Repete uma questão até que o valor da opção digitada seja válida.*/
-int chooseValue(char text[QUESTION_SIZE], int valueMax){
+int chooseValue(char question[QUESTION_SIZE], int valueMax){
     int choice = 0;
     do{
-        printf("%s", text);
+        printf("%s", question);
         fflush(stdin);
         scanf("%d", &choice);
     }while(!(choice >= 1 && choice <= valueMax));

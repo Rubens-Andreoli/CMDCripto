@@ -5,8 +5,9 @@
 #define FOLDER "./texts/"
 #define FILENAM_MAX 50
 #define FILENUM_MAX 10
-#define CHAR_MAX 500
+#define CHAR_MAX 601
 #define LINE_MAX 10
+#define FILETYPE ".txt"
 
 /**Preenche uma matriz[número do arquivo][nome do arquivo] com os arquivos encontrados na pasta determinada pelo programa e retorna: 0[nenhum arquivo encontrado]; 1+[total de arquivos].*/
 int readFolder(char files[FILENUM_MAX][FILENAM_MAX]){
@@ -16,7 +17,7 @@ int readFolder(char files[FILENUM_MAX][FILENAM_MAX]){
     int fileNum = 0;
     char filenameShow[FILENAM_MAX+10];
     while(((ptr_dir = readdir(ptr_folder)) != NULL) && (fileNum <= FILENUM_MAX)){
-        if(strstr(ptr_dir->d_name, ".txt") != NULL){
+        if(strstr(ptr_dir->d_name, FILETYPE) != NULL){
             if(fileNum < FILENUM_MAX){
                 sprintf(files[fileNum], "%s", ptr_dir->d_name);
                 sprintf(filenameShow, "%2d - [%s]", fileNum+1, files[fileNum]);
@@ -41,7 +42,7 @@ int readFile(char text[LINE_MAX][CHAR_MAX], char filename[FILENAM_MAX]){
     if(!ptr_file)
         return -1;
     while((fgets(text[line],CHAR_MAX, ptr_file) != NULL) && (line < LINE_MAX))
-        line++;
+        line++;//retirar acentos.
     fclose(ptr_file);
     return line;
 }
