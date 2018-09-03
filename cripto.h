@@ -1,4 +1,4 @@
-#define ALPHABET " !#$%&()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}abcdefghijklmnopqrstuvwxyz|^"
+#define ALPHABET " ABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}abcdefghijklmnopqrstuvwxyz0123456789!#$%&()*+,-./:;<=>?@|^"
 #define ALPHABET_SIZE 89
 #define MIN_PASS_SIZE 4
 #define MAX_PASS_SIZE 9

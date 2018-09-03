@@ -5,7 +5,7 @@
 #define SIDE_CHAR 186
 #define LINE_CHAR 205
 #define MENU_ALIGN -1
-#define MENU_MAX_ITEMS 10
+#define MENU_MAX_ITEMS 20
 #define QUESTION_SIZE 60
 
 /**Cria a quantidade desesaja de linhas horizontais.*/
@@ -19,8 +19,7 @@ void blankLine(int linesNum){
 
 /**Cria linha com texto encapsulado com alinhamento desejado (-1:esquerda; 0:centralizado; 1:direita).*/
 void textLine(char text[UI_TEXT_SIZE], int pos){
-    int textSize = strlen(text);
-    int i, spaces, isOdd = 0;
+    int i, spaces, isOdd = 0, textSize = strlen(text);
     switch(pos){
         case -1:
             printf("%c  ", SIDE_CHAR);
@@ -63,16 +62,18 @@ void topBox(char text[UI_TEXT_SIZE], int bottomLines){
     blankLine(bottomLines);
 }
 
-/**Cria menu principal com itens desejados.*/
-void fillMenu(char menuItems[MENU_MAX_ITEMS][UI_TEXT_SIZE], int numItens){
+/**Cria menu com itens desejados.*/
+void fillMenu(char menuItems[MENU_MAX_ITEMS][UI_TEXT_SIZE], int numItens, int isExit){
     int i;
     char menuItem[UI_TEXT_SIZE+10];
     for(i=0;i<numItens;i++){
         sprintf(menuItem, "%d - %s", i+1, menuItems[i]);
         textLine(menuItem, MENU_ALIGN);
     }
-    sprintf(menuItem, "%d - SAIR", i+1);
-    textLine(menuItem, MENU_ALIGN);
+    if(isExit==1){
+        sprintf(menuItem, "%d - SAIR", i+1);
+        textLine(menuItem, MENU_ALIGN);
+    }
     blankLine(2);
 }
 

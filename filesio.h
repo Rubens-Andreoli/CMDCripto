@@ -6,29 +6,20 @@
 #define OK_LETTERS  "aaaaAAAAeeeEEEiiiIIIooooOOOOuuuuUUUUcC"
 #define LETTERS_SIZE 38
 #define FOLDER "./texts/"
-#define FILENAM_MAX 50
-#define FILENAM_MIN 3
-#define FILENUM_MAX 20
 #define CHAR_MAX 6001
 #define LINE_MAX 60
 #define FILETYPE ".txt"
 
 /**Preenche uma matriz[número do arquivo][nome do arquivo] com os arquivos encontrados na pasta determinada pelo programa e retorna: 0[nenhum arquivo encontrado]; 1+[total de arquivos].*/
-int readFolder(char files[FILENUM_MAX][FILENAM_MAX]){
+int readFolder(char files[MENU_MAX_ITEMS][UI_TEXT_SIZE]){
     DIR *ptr_folder;
     struct dirent *ptr_dir;
     ptr_folder = opendir(FOLDER);
     int fileNum = 0;
-    char filenameShow[FILENAM_MAX+10];
-    while(((ptr_dir = readdir(ptr_folder)) != NULL) && (fileNum <= FILENUM_MAX)){
+    char filenameShow[UI_TEXT_SIZE+10];
+    while(((ptr_dir = readdir(ptr_folder)) != NULL) && (fileNum <= MENU_MAX_ITEMS)){
         if(strstr(ptr_dir->d_name, FILETYPE) != NULL){
-            if(fileNum < FILENUM_MAX){
-                sprintf(files[fileNum], "%s", ptr_dir->d_name);
-                sprintf(filenameShow, "%2d - [%s]", fileNum+1, files[fileNum]);
-                textLine(filenameShow, MENU_ALIGN);
-            }else{
-                textLine("...", -1);
-            }
+            sprintf(files[fileNum], "%s", ptr_dir->d_name);
             fileNum++;
         }
     }
@@ -52,9 +43,9 @@ void clearText(char text[LINE_MAX][CHAR_MAX], int lineTotal){
 }
 
 /**Preenche uma matriz[linha][caracter] com o texto encontrado no arquivo desejado e retorna: -1[arquivo não encontrado]; 0[arquivo vazio]; 1+[total de linhas].*/
-int readFile(char text[LINE_MAX][CHAR_MAX], char filename[FILENAM_MAX], int *isCripto){
+int readFile(char text[LINE_MAX][CHAR_MAX], char filename[UI_TEXT_SIZE], int *isCripto){
     FILE *ptr_file;
-    char filepath[FILENAM_MAX+10] = FOLDER;
+    char filepath[UI_TEXT_SIZE+10] = FOLDER;
     strcat(filepath, filename);
     ptr_file = fopen(filepath,"r");
     int line = 0;
@@ -88,9 +79,9 @@ void showText(char text[LINE_MAX][CHAR_MAX], int lineTotal, int isCripto){
 }
 
 /**Escreve matriz[linha][caracter] no arquivo desejado e retorna: 0[arquivo não encontrado]; 1[concluido].*/
-int writeFile(char text[LINE_MAX][CHAR_MAX], int lineTotal, char filename[FILENAM_MAX], int isCreate){
+int writeFile(char text[LINE_MAX][CHAR_MAX], int lineTotal, char filename[UI_TEXT_SIZE], int isCreate){
     FILE *ptr_file;
-    char filepath[FILENAM_MAX+10] = FOLDER;
+    char filepath[UI_TEXT_SIZE+10] = FOLDER;
     strcat(filepath, filename);
     ptr_file = fopen(filepath, "w");
     if (!ptr_file)
@@ -108,23 +99,23 @@ int writeFile(char text[LINE_MAX][CHAR_MAX], int lineTotal, char filename[FILENA
 }
 
 /**Repete questão ate receber nome do arquivo sem caracteres especiais ou acentuados e com mais de 3 caracteres.*/
-void createFilename(char fileName[FILENAM_MAX]){
+void createFilename(char fileName[UI_TEXT_SIZE]){
    int pos=0, isInvalid;
    do{
         isInvalid=0;
-        printf("Digite o nome do arquivo [%d-%d caracteres] para salvar seu texto: ", FILENAM_MIN, FILENAM_MAX);
+        printf("Digite o nome do arquivo [%d-%d caracteres] para salvar seu texto: ", 1, UI_TEXT_SIZE);
         fflush(stdin);
-        fgets(fileName, FILENAM_MAX, stdin);
+        fgets(fileName, UI_TEXT_SIZE, stdin);
         strtok(fileName, "\n");
         while(pos<strlen(fileName) && isInvalid==0){
             if(!isalpha(fileName[pos]) && !isdigit(fileName[pos])){
-                printf("Nao utilize caracteres acentuados ou especiais.\n");
+                printf("Nao utilize caracteres acentuados ou especiais.\n\n");
                 isInvalid=1;
             }
             pos++;
         }
         strcat(fileName, FILETYPE);
-    }while(strlen(fileName) < FILENAM_MIN || isInvalid !=0);
+    }while(strlen(fileName) <= 1 || isInvalid !=0);
 }
 
 /**Preenche uma matriz[linha][caracter] com o texto digitado pelo usuário e retorna: [total de linhas].*/

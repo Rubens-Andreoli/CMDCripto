@@ -10,11 +10,11 @@ char ITEMS[MENU_MAX_ITEMS][UI_TEXT_SIZE]={"CRIAR ARQUIVO","SELECIONAR ARQUIVO","
 int main()
 {
     int menuChoice=0, fileNumTotal=0, fileChoice=0, lineTotal=0, isCripto=0;
-    char files[FILENUM_MAX][FILENAM_MAX], text[LINE_MAX][CHAR_MAX], question[QUESTION_SIZE], pass[MAX_PASS_SIZE+1], fileName[FILENAM_MAX];
+    char files[MENU_MAX_ITEMS][UI_TEXT_SIZE], text[LINE_MAX][CHAR_MAX], question[QUESTION_SIZE], pass[MAX_PASS_SIZE+1], fileName[UI_TEXT_SIZE];
 
     while (menuChoice!=MENU_NUM_ITEMS+1){
         topBox("MENU", 1);
-        fillMenu(ITEMS, MENU_NUM_ITEMS);
+        fillMenu(ITEMS, MENU_NUM_ITEMS, 1);
         sprintf(question, "Digite a opcao desejada de acordo com o menu (1-%d): ", MENU_NUM_ITEMS+1);
         menuChoice = chooseValue(question, MENU_NUM_ITEMS+1);
         switch(menuChoice){
@@ -35,14 +35,14 @@ int main()
             case 2:
                 topBox(ITEMS[1], 1);
                 fileNumTotal = readFolder(files);
-                blankLine(1);
                 if(fileNumTotal != 0){
-                    blankLine(1);
-                    sprintf(question, "Digite a opcao referente ao arquivo desejado (1-%d): ", MIN(FILENUM_MAX, fileNumTotal));
-                    fileChoice = chooseValue(question, MIN(FILENUM_MAX, fileNumTotal));
+                    fillMenu(files, fileNumTotal, 0);
+                    sprintf(question, "Digite a opcao referente ao arquivo desejado (1-%d): ", MIN(MENU_MAX_ITEMS, fileNumTotal));
+                    fileChoice = chooseValue(question, MIN(MENU_MAX_ITEMS, fileNumTotal));
                     printf("Arquivo [%s] selecionado.\n", files[fileChoice-1]);
                     lineTotal = readFile(text, files[fileChoice-1],&isCripto);
                 }else{
+                    blankLine(1);
                     printf("Nenhum arquivo foi encontrado. ");
                 }
                 waitPress();
@@ -71,8 +71,8 @@ int main()
                 }else{
                     getPass(pass);
                     encrypt(text, lineTotal, pass);
-                    isCripto=1;
                     if(writeFile(text, lineTotal, files[fileChoice-1],0)==1){
+                        lineTotal = readFile(text, files[fileChoice-1],&isCripto);
                         printf("Arquivo criptografado com sucesso! ");
                     }else{
                         printf("Arquivo nao pode ser criptografado. ");
@@ -110,7 +110,7 @@ int main()
                         "***CRIPTOGRAFAR***\n"
                         "-ESSA OPCAO INICIA O PROCESSO DE CRIPTOGRAFIA SOBREPONDO O TEXTO NO ARQUIVO ORIGINAL.\n\n"
                         "***DESCRIPTOGRAFAR***\n"
-                        "-ESSA OPCAO INICIA O PROCESSO DE DESCRIPTOGRAFIA. O TEXTO DESCRIPTOGRAFADO SÓ"
+                        "-ESSA OPCAO INICIA O PROCESSO DE DESCRIPTOGRAFIA. O TEXTO DESCRIPTOGRAFADO SO"
                         "-PODERA SER VISUALIZADO DENTRO DO APLICATIVO.\n\n"
                         "***SOBRE***\n"
                         "-INFORMACOES ACADEMICAS DO PROJETO.\n\n"
@@ -124,7 +124,7 @@ int main()
                 printf("SOFTWARE PROJETADO PARA A DISCIPLINA APS (ATIVIDADES PRATICAS SUPERVISIONADAS).\n"
                         "CURSO: CIENCIA DA COMPUTACAO --- TURMA: CC2P18 / CC2Q18 --- UNIP CAMPUS VARGAS\n\n"
                         "GUILHERME	C59386-9\n"
-                        "GUSTAVO	C64211-8\n"
+                        "GUSTAVO	        C64211-8\n"
                         "MURILO		C42HIH-4\n"
                         "RUBENS		T49128-2\n"
                         "\nESTE SOFTWARE FOI DESENVOLVIDO EM LINGUAGEM DE PROGRAMACAO ESTRUTURADA (\"C\") E TEM COMO"

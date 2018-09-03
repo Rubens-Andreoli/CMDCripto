@@ -1,0 +1,6 @@
+printf("LINE: %d; CHARS: %d\n", line, charsLine);
+
+printf("(%c=%d)-(%c=%d)=%dMOD%d=%d\n", text[line][pos], charToInt(text[line][pos]),
+                   pass[pos%passLenght], charToInt(pass[pos%passLenght]),
+                   charToInt(text[line][pos])-charToInt(pass[pos%passLenght]),
+                   ALPHABET_SIZE, ((charToInt(text[line][pos])-charToInt(pass[pos%passLenght]))+ALPHABET_SIZE)%ALPHABET_SIZE);
