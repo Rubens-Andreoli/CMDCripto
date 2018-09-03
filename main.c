@@ -1,68 +1,66 @@
 #include <stdio.h>      //sprintf, printf, fprintf
-#include <stdlib.h>
 #include <string.h>     //strcpy
 #include "interface.h"
 #include "textio.h"
 #include "cripto.h"
 
-/**Testa se há arquivo selecionado e se o texto é válido para ser processado exibindo mensagem apropriada.
-Retorna: 0[não há texto]; 1[texto válido].*/
-int testText(int fileChoice, int chNum);
+int testText(int fileChoice, const char * const text);
+int testRead(int readReturn);
 
 int main()
 {
-    /*VARIÁVEIS: INTERFACE*/
-    const char MENU_ITEMS[MENU_MAX_ITEMS][UI_TEXT_SIZE] = {"CRIAR ARQUIVO","SELECIONAR ARQUIVO","VISUALIZAR","CRIPTOGRAFAR","DESCRIPTOGRAFAR","RESTAURAR","AJUDA","SOBRE"};
-    const int MENU_NUM_ITEMS = 8;
+    ////// VARIÁVEIS: INTERFACE //////
     char uiText[UI_TEXT_SIZE];
 
-    /*VARIÁVEIS: TEXTIO*/
-    int fileNumTotal, fileChoice = -1, fileNumOver, chNum;
-    char text[CHAR_MAX], fileName[FILES_NAME_MAX], files[MENU_MAX_ITEMS][FILES_NAME_MAX];
+    /////// VARIÁVEIS: TEXTIO //////
+    int fileNumTotal, fileChoice = -1, fileNumOver, isCreated;
+    char files[FILES_MAX][FILES_NAME_MAX], fileName[FILES_NAME_MAX];
+    char * text;
+    initText(&text);
 
-    /*VARIÁVEIS: CRIPTO*/
+    ////// VARIÁVEIS: CRIPTO //////
     int isTextCripto, isFileCripto;
     char pass[PASS_MAX];
 
-
     int menuChoice = 0;
-    while (menuChoice != MENU_NUM_ITEMS+1){
+    while (menuChoice != MAIN_MENU_NUM_ITEMS){
         topBox("MENU", 1);
-        fillMenu(MENU_ITEMS, MENU_NUM_ITEMS, 1);
+        MAIN_MENU;
         dashLine(2);
-        sprintf(uiText, "Digite a opcao desejada de acordo com o menu (1-%d):", MENU_NUM_ITEMS+1);
-        menuChoice = chooseItem(uiText, MENU_NUM_ITEMS+1);
+        sprintf(uiText, "Digite a opcao desejada de acordo com o menu (1-%d):", MAIN_MENU_NUM_ITEMS);
+        menuChoice = chooseItem(uiText, MAIN_MENU_NUM_ITEMS);
         switch(menuChoice){
             case 1:
-                topBox(MENU_ITEMS[0], 1);
+                topBox(MAIN_MENU_ITEMS[menuChoice-1], 1);
+                closedTextLine("!!NAO UTILIZE ACENTOS!!", 1);
+                dashLine(2);
+                sprintf(uiText, "Nome do arquivo [%d-%d caracteres] para salvar seu texto: ", FILES_NAME_MIN, FILES_NAME_MAX-EXT_LEN-1);
+                setValidStr(uiText,"Nome invalido!\n\n",fileName,validFilename);
+                topBox(MAIN_MENU_ITEMS[menuChoice-1], 1);
                 sprintf(uiText, "Para marcar o final do texto digite: %c", TEXT_STOP);
                 closedTextLine(uiText, -1);
                 closedTextLine("",-1);
                 closedTextLine("!!NAO UTILIZE ACENTOS!!", 1);
                 dashLine(2);
-                if((chNum = createText(text))){
-                    topBox(MENU_ITEMS[0], 1);
-                    closedTextLine("!!NAO UTILIZE ACENTOS!!", 1);
-                    dashLine(2);
-                    setFilename(fileName);
-                    if(writeFile(text, fileName)){
-                        strcpy(files[0], fileName);
-                        fileChoice = 0;
-                        printf("Arquivo [%s] foi criado com sucesso.\n", files[fileChoice]);
-                        isTextCripto = isFileCripto = 0;
-                    }else{
-                        fprintf(stderr, "Arquivo nao pode ser criado na pasta [%s]!\n", FOLDER);
-                        limitPrint(uiText);
-                    }
+                isCreated = createText(fileName);
+                if(isCreated==-2){
+                    fprintf(stderr, "Arquivo [%s] pode ser criado na pasta [%s]!", fileName, FOLDER);
+                }else if(isCreated>=0){
+                    strcpy(files[0], fileName);
+                    fileChoice = 0;
+                    dashLine(1);
+                    printf(uiText, "Arquivo [%s] foi criado com sucesso.\n", files[fileChoice]);
+                    isTextCripto = isFileCripto = 0;
+                    testRead(readFile(&text, files[fileChoice]));
                 }
                 waitPress();
                 break;
             case 2:
-                topBox(MENU_ITEMS[1], 1);
-                fileNumTotal = readFolder(files, MENU_MAX_ITEMS);
+                topBox(MAIN_MENU_ITEMS[menuChoice-1], 1);
+                fileNumTotal = readFolder(files);
                 fileNumOver = (fileNumTotal<=MENU_MAX_ITEMS)? 0:fileNumTotal-MENU_MAX_ITEMS;
                 if(fileNumTotal){
-                    fillMenu(files, fileNumTotal, 0);
+                    fillMenu(fileNumTotal-fileNumOver, FILES_NAME_MAX, files);
                     dashLine(fileNumOver? 1:2);
                     if(fileNumOver){
                       sprintf(uiText, "!!%d ARQUIVOS NAO EXIBIDOS!!", fileNumOver);
@@ -70,36 +68,43 @@ int main()
                       dashLine(2);
                     }
                     sprintf(uiText, "Digite a opcao referente ao arquivo desejado (1-%d):", fileNumTotal-fileNumOver);
-                    fileChoice = (chooseItem(uiText, fileNumTotal))-1;
-                    chNum = readFile(text, files[fileChoice]);
-                    if(chNum>0)
+                    fileChoice = (chooseItem(uiText, fileNumTotal-fileNumOver))-1;
+                    if(testRead(readFile(&text, files[fileChoice]))){
                         isTextCripto = isFileCripto = testCripto(text);
-                    printf("Arquivo [%s] %s\n", files[fileChoice], chNum==-1?"nao encontrado!":"selecionado.");
+                        printf(uiText, "Arquivo [%s] selecionado\n", files[fileChoice]);
+                    }
                 }else{
                     dashLine(1);
-                    printf("Nenhum arquivo foi encontrado!\n");
+                    puts("Nenhum arquivo foi encontrado!");
                 }
                 waitPress();
                 break;
             case 3:
-                topBox(MENU_ITEMS[2], 2);
-                if(testText(fileChoice, chNum)){
-                    isTextCripto? printf("%s\b \n", text):printf("%s\n", text);
+                topBox(MAIN_MENU_ITEMS[menuChoice-1], 2);
+                if(testText(fileChoice, text)){
+                    putchar('\n');
+                    if(!isTextCripto){
+                        splitTextLine(text);
+                        puts("\b ");
+                    }else puts(text);
+                    putchar('\n');
                     dashLine(2);
                     printf("O arquivo [%s]%s foi exibido.\n", files[fileChoice], isTextCripto?" criptografado":isFileCripto?" descriptografado":"");
                 }
                 waitPress();
                 break;
             case 4:
-                topBox(MENU_ITEMS[3], 2);
-                if(testText(fileChoice, chNum)){
+                topBox(MAIN_MENU_ITEMS[menuChoice-1], 2);
+                if(testText(fileChoice, text)){
                     if(isTextCripto || isFileCripto){
                         printf("Arquivo ja esta criptografado. ");
                     }else{
-                        setPass(pass);
+                        sprintf(uiText, "Digite uma senha de %d-%d caracteres: ", PASS_MIN, PASS_MAX-1);
+                        setValidStr(uiText, "Senha invalida!\n\n", pass, validPass);
                         encrypt(text, pass);
                         isTextCripto=1;
-                        if(writeFile(text, files[fileChoice])){
+                        if(writeFile(text, files[fileChoice]) > 0){
+                            isFileCripto=1;
                             printf("Arquivo criptografado com sucesso! ");
                         }else{
                             fprintf(stderr, "Texto criptografado não pode ser salvo! ");
@@ -109,41 +114,38 @@ int main()
                 waitPress();
                 break;
             case 5:
-                topBox(MENU_ITEMS[4], 2);
-                if(testText(fileChoice, chNum)){
+                topBox(MAIN_MENU_ITEMS[menuChoice-1], 2);
+                if(testText(fileChoice, text)){
                     if(!isTextCripto){
                         printf("O texto ja esta descriptografado. ");
                     }else{
-                        setPass(pass);
+                        setValidStr("Digite a senha do arquivo: ", "Senha invalida!\n\n", pass, validPass);
                         decrypt(text, pass);
                         isTextCripto = 0;
-                        printf("Texto descriptografado com sucesso! Acesse VISUALIZAR para ver o texto.\n");
+                        puts("Texto descriptografado com sucesso! Acesse VISUALIZAR para ver o texto.");
                     }
                 }
                 waitPress();
                 break;
             case 6:
-                topBox(MENU_ITEMS[5], 2);
-                if(testText(fileChoice, chNum)){
+                topBox(MAIN_MENU_ITEMS[menuChoice-1], 2);
+                if(testText(fileChoice, text)){
                     if(!isFileCripto && !isTextCripto){
                         printf("O arquivo ja esta descriptografado. ");
                     }else{
                         if(isTextCripto){
-                            setPass(pass);
+                            setValidStr("Digite a senha do arquivo: ", "Senha invalida!\n\n", pass, validPass);
                             decrypt(text, pass);
-                            writeFile(text, files[fileChoice]);
-                            isTextCripto = isFileCripto = 0;
-                        }else if(isFileCripto && !isTextCripto){
-                            writeFile(text, files[fileChoice]);
-                            isTextCripto = isFileCripto = 0;
                         }
+                        writeFile(text, files[fileChoice]);
+                        isTextCripto = isFileCripto = 0;
                         printf("O arquivo foi restaurado com sucesso! ");
                     }
                 }
                 waitPress();
                 break;
             case 7:
-                topBox(MENU_ITEMS[6], 2);
+                topBox(MAIN_MENU_ITEMS[menuChoice-1], 2);
                 printf("***CRIAR ARQUIVO***\n"
                         "-CRIA ARQUIVO DESCRIPTOGRAFADO DE TEXTO [%s] NA PASTA \"%s\", CONTIDA"
                         " NA PASTA RAIZ DO PROGRAMA, COM TEXTO E NOME DIGITADO PELO USUARIO."
@@ -171,8 +173,8 @@ int main()
                 waitPress();
                 break;
             case 8:
-                topBox(MENU_ITEMS[7], 2);
-                printf("SOFTWARE PROJETADO PARA A DISCIPLINA APS (ATIVIDADES PRATICAS"
+                topBox(MAIN_MENU_ITEMS[menuChoice-1], 2);
+                puts("SOFTWARE PROJETADO PARA A DISCIPLINA APS (ATIVIDADES PRATICAS"
                        " SUPERVISIONADAS).\nCURSO: CIENCIA DA COMPUTACAO --- TURMA:"
                        " CC2P18 / CC2Q18 --- UNIP CAMPUS VARGAS\n\nGUILHERME	C59386-9\n"
                         "GUSTAVO	        C64211-8\nMURILO		C42HIH-4\n"
@@ -180,7 +182,7 @@ int main()
                         " DE PROGRAMACAO ESTRUTURADA (\"C\") E TEM COMO OBJETIVO UTILIZAR"
                         " TECNICAS DE CRIPTOGRAFIA PARA CRIPTOGRAFAR E DESCRIPTOGRAFAR O CONTEUDO"
                         " DE UM ARQUIVO DE TEXTO, CRIADO PREVIAMENTE OU COM O USO DESTE SOFTWARE,"
-                        " UTILIZANDO PARA ISSO A CIFRA DE VIGENERE.\n");
+                        " UTILIZANDO PARA ISSO A CIFRA DE VIGENERE.");
                 dashLine(2);
                 waitPress();
                 break;
@@ -189,19 +191,30 @@ int main()
     return 0;
 }
 
-int testText(int fileChoice, int chNum){
-    if(fileChoice != -1){
-        if(chNum == -1){
-            printf("Arquivo nao encontrado!\n");
-            return 0;
-        }else if(chNum == 0){
-            printf("Nenhum texto encontrado no arquivo!\n");
-            return 0;
-        }else{
-            return 1;
-        }
-    }else{
-        printf("Nenhum arquivo foi selecionado ou criado!\n");
+int testText(int fileChoice, const char * const text){
+    if(fileChoice == -1){
+        puts("Nenhum arquivo foi selecionado ou criado!");
         return 0;
     }
+    if(text == NULL){
+        puts("Nao ha texto para ser processado!");
+        return 0;
+    }
+    return 1;
+}
+
+int testRead(int readReturn){
+    if(readReturn == -2){
+        puts("Arquivo nao encontrado!");
+        return 0;
+    }
+    if(readReturn == -1){
+        fputs("Falha na alocação de memória!",stderr);
+        return 0;
+    }
+    if(readReturn == 0){
+        puts("Nenhum texto encontrado no arquivo!");
+        return 0;
+    }
+    return 1;
 }

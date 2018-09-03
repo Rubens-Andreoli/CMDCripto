@@ -1,19 +1,20 @@
 #ifndef TEXTIO_H_INCLUDED
 #define TEXTIO_H_INCLUDED
-//version 1.0
+//version 2.0
 
-#define FOLDER "./texts/"      /*Caminho da pasta onde os aquivos são salvos.*/
-#define FOLDER_LEN 8           /*Número de caracteres do caminho da pasta.*/
-#define FILES_TYPE ".txt"      /*Tipo do arquivo salvo.*/
-#define EXT_LEN 4              /*Número de caracteres da extensão do arquivo.*/
-#define FILES_NAME_MIN 2       /*Número mínimo de caracteres do nome do arquivo.*/
-#define FILES_NAME_MAX 60+4+1  /*Número máximo de caracteres do nome do arquivo + extensão + \0.*/ //[interface UI_TEXT_SIZE]
-#define CHAR_MAX 6000+1+2      /*Número máximo de caracteres por linha a serem lidos + \0 + margem de segurança.*/
-#define TEXT_STOP '|'
+/* ---- Definições gerais ---- */
+#define FOLDER "./texts/"       /*Caminho da pasta onde os aquivos são salvos.*/
+#define FOLDER_LEN 8            /*Número de caracteres do caminho da pasta.*/
+#define FILES_TYPE ".txt"       /*Tipo do arquivo salvo.*/
+#define EXT_LEN 4               /*Número de caracteres da extensão do arquivo.*/
+#define FILES_NAME_MIN 2        /*Número mínimo de caracteres do nome do arquivo.*/
+#define FILES_NAME_MAX 60+4+1   /*Número máximo de caracteres do nome do arquivo + extensão + \0.*/
+#define TEXT_STOP '|'           /*Caractere utilizado para simbolizar final da inserção de texto.*/
+#define FILES_MAX 15            /*Número máximo de arquivos a serem lidos.*/
 
 /*Constantes para conversão de caracteres não reconhecidos pelo console:*/
 static const char BAN_CHAR_FILE[] = "àáâãÀÁÂÃèéêÈÉÊìíîÌÍÎòóôõÒÓÔÕúùûüÙÚÛÜçÇ";
-static const int BAN_CHAR_CONSOLE[] = {
+static const char BAN_CHAR_CONSOLE[] = {
     -123,-96,-125,-58,-73,-75,-74,-57,      //a
     -118,-126,-120,-44,-112,-46,            //e
     -115,-95,-116,-34,-42,-41,              //i
@@ -23,33 +24,42 @@ static const int BAN_CHAR_CONSOLE[] = {
 static const char OK_CHAR[] = "aaaaAAAAeeeEEEiiiIIIooooOOOOuuuuUUUUcC";
 static const int BAN_CHAR_SIZE = 38;
 
-/**Preenche text[] com input do stdin até o limite de CHAR_MAX ou até o caractere TEXT_STOP.
-*Retorna: [número de caracteres gravados].*/
-unsigned int createText(char text[]);
+/* ---- Protótipo das funções ---- */
+/**Inicializa "*text" para NULL.*/
+void initText(char ** text);
 
-/**Valida caractere dependendo da origem do input (cOrF = c: console/ f: file).
-Retorna: [char ASCII válido].*/
-char validChar(char invalidCharm, char cOrF);
-
-/**Repete questão e preenche fileName[] até que o nome do arquivo seja validado pela função validFilename().*/
-void setFilename(char fileName[]);
-
-/**Remove quebra de linha e adiciona extensão FILES_TYPE ao nome do arquivo se este não tiver caracteres especiais
-ou acentuados, e com número de caracteres entre FILES_NAME_MIN e FILES_NAME_MAX-4.
-*Retorn: 0[nome não criado]; 1[concluído].*/
+/**Valida e acrescenta FILES_TYPE ao "fileName" se este não tiver caracteres especiais ou acentuados, e possui número de caracteres entre FILES_NAME_MIN e FILES_NAME_MAX-EXT_LEN.
+*Retorn: 0[nome não válido]; 1[válido].*/
 int validFilename(char fileName[]);
 
-/**Escreve text[] no arquivo filename[] (deve conter extensão), e edita filename[] se passar do FILES_NAME_MAX.
-*Retorna: 0[arquivo não criado]; 1[concluído].*/
-int writeFile(const char text[], char filename[]);
+/**Preenche "fileName[]" com input do stdin até o limite do input buffer ou até o caractere TEXT_STOP, se algum texto for digitado além de TEXT_STOP.
+*Retorna: -2[falha, arquivo não criado]; -1[falha, nenhum texto inserido]; 0[sucesso, porém limite foi atingido]; 1[sucesso].*/
+int createText(const char fileName[]);
 
-/**Preenche files[][FILES_NAME_MAX] com os arquivos de extensão FILES_TYPE,
-até o limite filesLimit de arquivos, e FILES_NAME_MAX caracteres, encontrados na pasta determinada pelo programa.
-*Retorna: [número total de arquivos na pasta, sem restrições].*/
-int readFolder(char files[][FILES_NAME_MAX], int filesLimit);
+/**Preenche "files[][FILES_NAME_MAX]" com os arquivos de extensão FILES_TYPE,
+até o limite FILES_MAX de arquivos, com FILES_NAME_MAX caracteres, encontrados na pasta determinada pelo programa.
+*Retorna: -1[falha, ao acessar FOLDER]; 0+[número total de arquivos na pasta, sem restrições].*/
+int readFolder(char files[][FILES_NAME_MAX]);
 
-/**Preenche text[] com o texto encontrado no arquivo filename[] até o limite de CHAR_MAX.
-*Retorna: -2[nome do arquivo muito grande]; -1[arquivo não encontrado]; 0[arquivo vazio]; 1+[total de linhas].*/
-int readFile(char text[], const char filename[]);
+/**Libera memória alocada para "*text" e se arquivo "fileName[]" (deve conter extensão e ter tamanho máximo FILES_NAME_MAX) contém texto,
+aloca espaço suficiente e copia o conteúdo para "(*text)[]".
+*Retorna: -2[falha, arquivo não aberto]; -1[falha, memória não alocada]; 0[sucesso, porém arquivo vazio]; 1[sucesso].*/
+int readFile(char ** text, const char fileName[]);
+
+/**Escreve "(*text)[]" no arquivo "fileName[]" (deve conter extensão e ter tamanho máximo FILES_NAME_MAX).
+*Retorna: -1[falha, arquivo não criado]; 0[falha, texto não inserido no arquivo]; 1[sucesso].*/
+int writeFile(const char * const text, const char fileName[]);
+
+/* ---- Main exemplo ---- */
+/*int main()
+{
+    /////// VARIÁVEIS: TEXTIO //////
+    int fileNumTotal, fileChoice = -1, fileNumOver, isCreated;
+    char files[FILES_MAX][FILES_NAME_MAX], fileName[FILES_NAME_MAX];
+    char * text;
+    initText(&text);
+
+    return 0;
+}*/
 
 #endif // TEXTIO_H_INCLUDED

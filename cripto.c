@@ -1,24 +1,27 @@
-#include <stdio.h>      //printf, fflush, fgets
 #include <ctype.h>      //isprint
-#include <string.h>     //strlen, strtok
+#include <string.h>     //strlen
 #include "cripto.h"
 
-void setPass(char pass[]){
-    int isInvalid = 1;
-    while(isInvalid){
-        printf("Digite uma senha de %d-%d caracteres: ", PASS_MIN, PASS_MAX-1);
-        fflush(stdin);
-        fgets(pass, PASS_MAX, stdin);
-        strtok(pass, "\n");
-        if(strlen(pass)<PASS_MIN){
-            printf("Senha deve ter no minimo %d caracteres!\n\n", PASS_MIN);
-        }else{
-            isInvalid = 0;
+/**Converte caractere em inteiro de acordo com a posição no ALPHABET.
+Retorna: [inteiro representativo do char].*/
+static int charToInt(char letter);
+
+int validPass(const char pass[]){
+    int passLen = strlen(pass);
+    if(passLen<PASS_MIN || passLen>PASS_MAX) return 0;
+    int i, isInvalid = 0, pos;
+    for(i=0; i<passLen && isInvalid == 0; i++){
+        isInvalid = 1;
+        for(pos=0; pos<ALPHABET_SIZE; pos++){
+            if(pass[i]==ALPHABET[pos])
+                isInvalid = 0;
         }
     }
+    if(isInvalid) return 0;
+    else return 1;
 }
 
-int charToInt(char letter){
+static int charToInt(char letter){
     int pos;
     for(pos=0; pos<ALPHABET_SIZE; pos++){
         if(letter==ALPHABET[pos])
@@ -29,7 +32,7 @@ int charToInt(char letter){
 
 void encrypt(char text[], const char pass[]){
     int pos, passLenght=strlen(pass);
-    for(pos=0; text[pos]!='\0'; pos++){
+    for(pos=0; text[pos]!='\0'; pos++){ // ou [pos<strlen(text)]
         if(isprint(text[pos]))
             text[pos]=ALPHABET[(charToInt(text[pos])+charToInt(pass[pos%passLenght]))%ALPHABET_SIZE];
             //ALPHABET[(posição do char do texto no alfabeto + posição relativa do char da senha no alfabeto)%tamanho do alfabeto]
@@ -50,7 +53,6 @@ void decrypt(char text[], const char pass[]){
 }
 
 int testCripto(const char text[]){
-    if(text[strlen(text)-1]=='~')
-        return 1;
-    return 0;
+    if(text[strlen(text)-1]=='~') return 1;
+    else return 0;
 }

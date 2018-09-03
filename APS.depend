@@ -340,7 +340,7 @@
 
 1458104920 d:\computação\linguagens\c\unip\aps - criptografia\aps v2.3.0\cripto.h
 
-1458354930 source:d:\computação\linguagens\c\unip\aps - criptografia\aps v2.3.0\interface.c
+1458152262 source:d:\computação\linguagens\c\unip\aps - criptografia\aps v2.3.0\interface.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -361,10 +361,111 @@
 
 1458188827 d:\computação\linguagens\c\unip\aps - criptografia\aps v2.3.0\textio.h
 
-1458369790 source:d:\computação\linguagens\c\unip\aps - criptografia\aps v2.3.0\textio.c
+1458189214 source:d:\computação\linguagens\c\unip\aps - criptografia\aps v2.3.0\textio.c
 	<stdio.h>
 	<dirent.h>
 	<ctype.h>
 	<string.h>
 	"textio.h"
+
+1458463484 source:d:\computação\linguagens\c\unip\aps - criptografia\aps v2.3.1\cripto.c
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	"cripto.h"
+
+1458516735 d:\computação\linguagens\c\unip\aps - criptografia\aps v2.3.1\cripto.h
+
+1458515360 source:d:\computação\linguagens\c\unip\aps - criptografia\aps v2.3.1\interface.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"interface.h"
+
+1458515353 d:\computação\linguagens\c\unip\aps - criptografia\aps v2.3.1\interface.h
+
+1458516536 source:d:\computação\linguagens\c\unip\aps - criptografia\aps v2.3.1\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"interface.h"
+	"textio.h"
+	"cripto.h"
+
+1458516179 d:\computação\linguagens\c\unip\aps - criptografia\aps v2.3.1\textio.h
+
+1458516305 source:d:\computação\linguagens\c\unip\aps - criptografia\aps v2.3.1\textio.c
+	<stdio.h>
+	<stdlib.h>
+	<dirent.h>
+	<ctype.h>
+	<string.h>
+	<assert.h>
+	"textio.h"
+
+1458873804 source:d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.0\interface.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"interface.h"
+
+1458875917 d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.0\interface.h
+
+1458683360 source:d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.0\textio.c
+	<stdio.h>
+	<stdlib.h>
+	<dirent.h>
+	<ctype.h>
+	<string.h>
+	<assert.h>
+	"textio.h"
+
+1458683094 d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.0\textio.h
+
+1458872448 source:d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.0\cripto.c
+	<ctype.h>
+	<string.h>
+	"cripto.h"
+
+1458875097 d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.0\cripto.h
+
+1458875852 source:d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.0\main.c
+	<stdio.h>
+	<string.h>
+	"interface.h"
+	"textio.h"
+	"cripto.h"
+
+1458872448 source:d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.0b\cripto.c
+	<ctype.h>
+	<string.h>
+	"cripto.h"
+
+1458875097 d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.0b\cripto.h
+
+1458875852 source:d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.0b\main.c
+	<stdio.h>
+	<string.h>
+	"interface.h"
+	"textio.h"
+	"cripto.h"
+
+1458892822 d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.0b\interface.h
+
+1458683094 d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.0b\textio.h
+
+1458683360 source:d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.0b\textio.c
+	<stdio.h>
+	<stdlib.h>
+	<dirent.h>
+	<ctype.h>
+	<string.h>
+	<assert.h>
+	"textio.h"
+
+1458892723 source:d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.0b\interface.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"interface.h"
 
