@@ -1,5 +1,8 @@
 #include <dirent.h>
 
+#define BAN_LETTERS "абвгАБВГийкИЙКмноМНОтуфхТУФХъщыьЩЪЫЬз"
+#define OK_LETTERS  "aaaaAAAAeeeEEEiiiIIIooooOOOOuuuuUUUUc"
+#define LETTERS_SIZE 37
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define FOLDER "./texts/"
 #define FILENAM_MAX 50
@@ -31,6 +34,21 @@ int readFolder(char files[FILENUM_MAX][FILENAM_MAX]){
     return fileNum;
 }
 
+/**Remove quebra de linha e acentuacao do texto.*/
+void clearText(char text[LINE_MAX][CHAR_MAX], int lineTotal){
+    int line, pos, i,charsLine;
+    for(line=0; line<=lineTotal;line++){
+        strtok(text[line], "\n");
+        charsLine = strlen(text[line]);
+        for(pos=0;pos<=charsLine-1;pos++){
+            for(i=0;i<=LETTERS_SIZE;i++){
+                if(text[line][pos] == BAN_LETTERS[i])
+                    text[line][pos] = OK_LETTERS[i];
+            }
+        }
+    }
+}
+
 /**Preenche uma matriz[linha][caracter] com o texto encontrado no arquivo desejado e retorna: -1[arquivo nгo encontrado]; 0[arquivo vazio]; 1+[total de linhas].*/
 int readFile(char text[LINE_MAX][CHAR_MAX], char filename[FILENAM_MAX]){
     FILE *ptr_file;
@@ -45,13 +63,6 @@ int readFile(char text[LINE_MAX][CHAR_MAX], char filename[FILENAM_MAX]){
     fclose(ptr_file);
     clearText(text, line);
     return line;
-}
-
-/**Remove quebra de linha do texto.*/
-void clearText(char text[LINE_MAX][CHAR_MAX], int lineTotal){
-    int line;
-    for(line=0; line<=lineTotal;line++)
-        strtok(text[line], "\n");
 }
 
 /**Mostra resultado da leitura do arquivo desejado.*/
