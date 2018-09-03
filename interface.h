@@ -1,12 +1,12 @@
 #include <string.h>
 
 #define UI_SIZE 80
-#define UI_TEXT_SIZE 40
+#define UI_TEXT_SIZE 30
 #define SIDE_CHAR 186
 #define LINE_CHAR 205
-#define QUESTION_SIZE 60
 #define MENU_ALIGN -1
-#define MENU_NUM_ITEMS 6
+#define MENU_MAX_ITEMS 10
+#define QUESTION_SIZE 60
 
 /**Cria a quantidade desesaja de linhas horizontais.*/
 void blankLine(int linesNum){
@@ -63,10 +63,11 @@ void topBox(char text[UI_TEXT_SIZE], int bottomLines){
     blankLine(bottomLines);
 }
 
-void fillMenu(char menuItems[MENU_NUM_ITEMS][UI_TEXT_SIZE-10]){
+/**Cria menu principal com itens desejados.*/
+void fillMenu(char menuItems[MENU_MAX_ITEMS][UI_TEXT_SIZE], int numItens){
     int i;
-    char menuItem[UI_TEXT_SIZE];
-    for(i=0;i<MENU_NUM_ITEMS;i++){
+    char menuItem[UI_TEXT_SIZE+10];
+    for(i=0;i<numItens;i++){
         sprintf(menuItem, "%d - %s", i+1, menuItems[i]);
         textLine(menuItem, MENU_ALIGN);
     }

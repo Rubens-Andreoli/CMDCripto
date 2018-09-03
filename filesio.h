@@ -1,12 +1,12 @@
 #include <dirent.h>
 
-#define banLetters "àáâãÀÁÂÃèéêÈÉÊìíîÌÍÎòóôõÒÓÔÕúùûüÙÚÛÜç"
-#define okLetters  "aaaaAAAAeeeEEEiiiIIIooooOOOOuuuuUUUUc"
-#define LettersSize 37
 #define MIN(a,b) (((a)<(b))?(a):(b))
+#define BAN_LETTERS "àáâãÀÁÂÃèéêÈÉÊìíîÌÍÎòóôõÒÓÔÕúùûüÙÚÛÜçÇ"
+#define OK_LETTERS  "aaaaAAAAeeeEEEiiiIIIooooOOOOuuuuUUUUcC"
+#define LETTERS_SIZE 38
 #define FOLDER "./texts/"
 #define FILENAM_MAX 50
-#define FILENUM_MAX 10
+#define FILENUM_MAX 20
 #define CHAR_MAX 6001
 #define LINE_MAX 60
 #define FILETYPE ".txt"
@@ -34,21 +34,20 @@ int readFolder(char files[FILENUM_MAX][FILENAM_MAX]){
     return fileNum;
 }
 
-/**Remove quebra de linha e acentuação do texto.*/
+/**Remove quebra de linha e acentuacao do texto.*/
 void clearText(char text[LINE_MAX][CHAR_MAX], int lineTotal){
     int line, pos, i,charsLine;
     for(line=0; line<=lineTotal;line++){
         strtok(text[line], "\n");
         charsLine = strlen(text[line]);
         for(pos=0;pos<=charsLine-1;pos++){
-            for(i=0;i<=LettersSize;i++){
-                if(text[line][pos] == banLetters[i])
-                    text[line][pos] = okLetters[i];
+            for(i=0;i<=LETTERS_SIZE;i++){
+                if(text[line][pos] == BAN_LETTERS[i])
+                    text[line][pos] = OK_LETTERS[i];
             }
         }
     }
 }
-
 /**Preenche uma matriz[linha][caracter] com o texto encontrado no arquivo desejado e retorna: -1[arquivo não encontrado]; 0[arquivo vazio]; 1+[total de linhas].*/
 int readFile(char text[LINE_MAX][CHAR_MAX], char filename[FILENAM_MAX]){
     FILE *ptr_file;
@@ -89,7 +88,8 @@ int writeFile(char text[LINE_MAX][CHAR_MAX], int lineTotal, char filename[FILENA
     int line;
     for(line=0;line < lineTotal;line++){
         fprintf(ptr_file, text[line]);
-        fprintf(ptr_file, "\n");
+        if(line!=lineTotal-1)
+            fprintf(ptr_file, "\n");
     }
     fclose(ptr_file);
     return 1;
