@@ -17,7 +17,7 @@ void blankLine(int linesNum){
     }
 }
 
-/**Cria linha com texto encapsulado com alinhamento desejado [-1:esquerda; 0:centralizado; 1:direita].*/
+/**Cria linha com texto encapsulado com alinhamento desejado (-1:esquerda; 0:centralizado; 1:direita).*/
 void textLine(char text[UI_TEXT_SIZE], int pos){
     int textSize = strlen(text);
     int i, spaces, isOdd = 0;
@@ -76,7 +76,7 @@ void fillMenu(char menuItems[MENU_MAX_ITEMS][UI_TEXT_SIZE], int numItens){
     blankLine(2);
 }
 
-/**Repete uma questão até que o valor da opção digitada seja válida.*/
+/**Repete uma questão até que o valor da opção digitada seja válida e retorna: [valor escolhido pelo usuário].*/
 int chooseValue(char question[QUESTION_SIZE], int valueMax){
     int choice = 0;
     do{

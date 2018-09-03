@@ -114,19 +114,51 @@
 
 1447293344 c:\users\morus\desktop\aps v2.2.0 [off]\cripto.h
 
-1447306452 source:c:\users\morus\desktop\aps v2.2.2\main.c
+1447384222 source:c:\users\morus\desktop\aps v2.3.0\main.c
 	<stdio.h>
 	<stdlib.h>
 	"interface.h"
 	"filesio.h"
 	"cripto.h"
 
-1447290170 c:\users\morus\desktop\aps v2.2.2\interface.h
+1447384660 c:\users\morus\desktop\aps v2.3.0\interface.h
 	<string.h>
 
-1447379282 c:\users\morus\desktop\aps v2.2.2\filesio.h
+1447384477 c:\users\morus\desktop\aps v2.3.0\filesio.h
 	<dirent.h>
 	<ctype.h>
 
-1447293344 c:\users\morus\desktop\aps v2.2.2\cripto.h
+1447384586 c:\users\morus\desktop\aps v2.3.0\cripto.h
+
+1447378895 source:c:\users\morus\desktop\aps v2.3.0[off]\main.c
+	<stdio.h>
+	<stdlib.h>
+	"interface.h"
+	"filesio.h"
+	"cripto.h"
+
+1447290170 c:\users\morus\desktop\aps v2.3.0[off]\interface.h
+	<string.h>
+
+1447379508 c:\users\morus\desktop\aps v2.3.0[off]\filesio.h
+	<dirent.h>
+	<ctype.h>
+
+1447293344 c:\users\morus\desktop\aps v2.3.0[off]\cripto.h
+
+1447384980 source:f:\aps\aps v2.3.0\main.c
+	<stdio.h>
+	<stdlib.h>
+	"interface.h"
+	"filesio.h"
+	"cripto.h"
+
+1447385184 f:\aps\aps v2.3.0\interface.h
+	<string.h>
+
+1447384478 f:\aps\aps v2.3.0\filesio.h
+	<dirent.h>
+	<ctype.h>
+
+1447384588 f:\aps\aps v2.3.0\cripto.h
 

@@ -13,7 +13,7 @@ void getPass(char pass[MAX_PASS_SIZE+1]){
     }while(strlen(pass)<MIN_PASS_SIZE);
 }
 
-/**Converte caractere retornando inteiro.*/
+/**Converte caractere retorna: [inteiro representativo do char].*/
 int charToInt(char letter){
     int pos;
     for(pos=0;pos<=ALPHABET_SIZE-1;pos++){

@@ -36,7 +36,7 @@ int readFolder(char files[FILENUM_MAX][FILENAM_MAX]){
     return fileNum;
 }
 
-/**Remove quebra de linha e acentuacao do texto.*/
+/**Remove quebra de linha e acentuação do texto.*/
 void clearText(char text[LINE_MAX][CHAR_MAX], int lineTotal){
     int line, pos, i,charsLine;
     for(line=0; line<=lineTotal;line++){
@@ -50,8 +50,9 @@ void clearText(char text[LINE_MAX][CHAR_MAX], int lineTotal){
         }
     }
 }
+
 /**Preenche uma matriz[linha][caracter] com o texto encontrado no arquivo desejado e retorna: -1[arquivo não encontrado]; 0[arquivo vazio]; 1+[total de linhas].*/
-int readFile(char text[LINE_MAX][CHAR_MAX], char filename[FILENAM_MAX]){
+int readFile(char text[LINE_MAX][CHAR_MAX], char filename[FILENAM_MAX], int *isCripto){
     FILE *ptr_file;
     char filepath[FILENAM_MAX+10] = FOLDER;
     strcat(filepath, filename);
@@ -63,24 +64,31 @@ int readFile(char text[LINE_MAX][CHAR_MAX], char filename[FILENAM_MAX]){
         line++;
     fclose(ptr_file);
     clearText(text, line);
+    *isCripto=0;
+    if(text[line-1][strlen(text[line-1])-1]=='~')
+        *isCripto=1;
     return line;
 }
 
 /**Mostra resultado da leitura do arquivo desejado.*/
-void showText(char text[LINE_MAX][CHAR_MAX], int lineTotal){
+void showText(char text[LINE_MAX][CHAR_MAX], int lineTotal, int isCripto){
     int line;
     if(lineTotal != -1){
-        if(lineTotal == 0)
+        if(lineTotal == 0){
             printf("Nenhum texto encontrado no arquivo.\n");
-        for(line=0;line < MIN(lineTotal,LINE_MAX);line++)
-            printf("%s\n", text[line]);
+        }else{
+            if(isCripto==1)
+                text[lineTotal-1][strlen(text[lineTotal-1])-1]=' ';
+            for(line=0;line < MIN(lineTotal,LINE_MAX);line++)
+                printf("%s\n", text[line]);
+        }
     }else{
         printf("Arquivo nao encontrado.\n");
     }
 }
 
 /**Escreve matriz[linha][caracter] no arquivo desejado e retorna: 0[arquivo não encontrado]; 1[concluido].*/
-int writeFile(char text[LINE_MAX][CHAR_MAX], int lineTotal, char filename[FILENAM_MAX]){
+int writeFile(char text[LINE_MAX][CHAR_MAX], int lineTotal, char filename[FILENAM_MAX], int isCreate){
     FILE *ptr_file;
     char filepath[FILENAM_MAX+10] = FOLDER;
     strcat(filepath, filename);
@@ -93,6 +101,8 @@ int writeFile(char text[LINE_MAX][CHAR_MAX], int lineTotal, char filename[FILENA
         if(line!=lineTotal-1)
             fprintf(ptr_file, "\n");
     }
+    if(!isCreate)
+      fprintf(ptr_file, "~");
     fclose(ptr_file);
     return 1;
 }
@@ -101,7 +111,7 @@ int writeFile(char text[LINE_MAX][CHAR_MAX], int lineTotal, char filename[FILENA
 void createFilename(char fileName[FILENAM_MAX]){
    int pos=0, isInvalid;
    do{
-        isInvalid=0
+        isInvalid=0;
         printf("Digite o nome do arquivo [%d-%d caracteres] para salvar seu texto: ", FILENAM_MIN, FILENAM_MAX);
         fflush(stdin);
         fgets(fileName, FILENAM_MAX, stdin);
@@ -115,4 +125,18 @@ void createFilename(char fileName[FILENAM_MAX]){
         }
         strcat(fileName, FILETYPE);
     }while(strlen(fileName) < FILENAM_MIN || isInvalid !=0);
+}
+
+/**Preenche uma matriz[linha][caracter] com o texto digitado pelo usuário e retorna: [total de linhas].*/
+int getText(char text[LINE_MAX][CHAR_MAX]){
+    int line=0;
+    do{
+        printf("PARAGRAFO %d: ", line+1);
+        fflush(stdin);
+        fgets(text[line],CHAR_MAX, stdin);
+        line++;
+        }while((strlen(text[line-1]) != 1) && (line < LINE_MAX));
+    line--;
+    clearText(text, line);
+    return line;
 }
