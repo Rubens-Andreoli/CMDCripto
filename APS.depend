@@ -1,14 +1,13 @@
 # depslib dependency file v1.0
-1447121204 source:f:\aps\aps\main.c
+1447134730 source:f:\aps\aps\main.c
 	<stdio.h>
 	<stdlib.h>
 	"interface.h"
 	"filesio.h"
 	"cripto.h"
 
-1447121296 f:\aps\aps\filesio.h
+1447134016 f:\aps\aps\filesio.h
 	<dirent.h>
-	<string.h>
 
 1446178454 source:i:\aps\aps\main.c
 	<stdio.h>
@@ -18,10 +17,10 @@
 1446179044 i:\aps\aps\filesio.h
 	<dirent.h>
 
-1446835296 f:\aps\aps\interface.h
+1447130832 f:\aps\aps\interface.h
 	<string.h>
 
-1447121462 f:\aps\aps\cripto.h
+1447134256 f:\aps\aps\cripto.h
 
 1446760002 source:e:\aps\aps\main.c
 	<stdio.h>
@@ -54,4 +53,19 @@
 	<string.h>
 
 1446904936 j:\aps\aps\cripto.h
+
+1447134730 source:d:\computação\linguagens\c\aps - criptografia\aps v2.0.0\aps\main.c
+	<stdio.h>
+	<stdlib.h>
+	"interface.h"
+	"filesio.h"
+	"cripto.h"
+
+1447130832 d:\computação\linguagens\c\aps - criptografia\aps v2.0.0\aps\interface.h
+	<string.h>
+
+1447134016 d:\computação\linguagens\c\aps - criptografia\aps v2.0.0\aps\filesio.h
+	<dirent.h>
+
+1447134256 d:\computação\linguagens\c\aps - criptografia\aps v2.0.0\aps\cripto.h
 
