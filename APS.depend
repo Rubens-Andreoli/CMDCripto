@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1447101552 source:f:\aps\aps\main.c
+1447110266 source:f:\aps\aps\main.c
 	<stdio.h>
 	<stdlib.h>
 	"interface.h"
@@ -21,7 +21,7 @@
 1446835296 f:\aps\aps\interface.h
 	<string.h>
 
-1447102274 f:\aps\aps\cripto.h
+1447110882 f:\aps\aps\cripto.h
 
 1446760002 source:e:\aps\aps\main.c
 	<stdio.h>
@@ -54,20 +54,4 @@
 	<string.h>
 
 1446904936 j:\aps\aps\cripto.h
-
-1447101552 source:c:\users\morus\desktop\aps v1.1\aps\main.c
-	<stdio.h>
-	<stdlib.h>
-	"interface.h"
-	"filesio.h"
-	"cripto.h"
-
-1446835296 c:\users\morus\desktop\aps v1.1\aps\interface.h
-	<string.h>
-
-1446901370 c:\users\morus\desktop\aps v1.1\aps\filesio.h
-	<dirent.h>
-	<string.h>
-
-1447102706 c:\users\morus\desktop\aps v1.1\aps\cripto.h
 

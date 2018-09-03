@@ -6,9 +6,8 @@
 
 int main()
 {
-    int menuChoice=0, fileNumTotal=0, fileChoice=0, lineTotal=0, table[TABLE_ORDER][TABLE_ORDER];
+    int menuChoice=0, fileNumTotal=0, fileChoice=0, lineTotal=0, matrix[MATRX_ORDER][MATRX_ORDER], matrixInv[MATRX_ORDER][MATRX_ORDER];
     char files[FILENUM_MAX][FILENAM_MAX], text[LINE_MAX][CHAR_MAX], question[QUESTION_SIZE], pass[MAX_PASS_SIZE+1];
-    double tableInv[TABLE_ORDER][TABLE_ORDER];
 
     while (menuChoice != 7){
         topBox("MENU", 1);
@@ -59,9 +58,9 @@ int main()
                     printf("Nenhum texto encontrado no arquivo. ");
                 }else{
                     createPass(pass);
-                    passToTable(pass, table);
-                    makeInvertible(table);
-                    encrypt(text, lineTotal, table);
+                    passToTable(pass, matrix);
+                    makeInvertible(matrix);
+                    crypt(text, lineTotal, matrix);
                     //TODO: criptografar texto, salvar arquivo.
                 }
                 printf("\n");
@@ -75,11 +74,10 @@ int main()
                     printf("Nenhum texto encontrado no arquivo. ");
                 }else{
                     createPass(pass);
-                    passToTable(pass, table);
-                    makeInvertible(table);
-                    printf("DET:%d\n",determinant(table));
-                    invert(table,determinant(table),tableInv);
-                    decrypt(text, lineTotal, tableInv);
+                    passToTable(pass, matrix);
+                    makeInvertible(matrix);
+                    invert(matrix,determinant(matrix),matrixInv);
+                    crypt(text, lineTotal, matrixInv);
                     //TODO: descriptografar texto; salvar arquivo.
                 }
                 waitPress();
