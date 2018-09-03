@@ -6,8 +6,8 @@
 
 int main()
 {
-    int menuChoice=0, fileNumTotal=0, fileChoice=0, lineTotal=0, matrix[MATRX_ORDER][MATRX_ORDER], matrixInv[MATRX_ORDER][MATRX_ORDER];
-    char files[FILENUM_MAX][FILENAM_MAX], text[LINE_MAX][CHAR_MAX], question[QUESTION_SIZE], pass[MAX_PASS_SIZE+1];
+    int menuChoice=0, fileNumTotal=0, fileChoice=0, charTotal=0, matrix[MATRX_ORDER][MATRX_ORDER], matrixInv[MATRX_ORDER][MATRX_ORDER];
+    char files[FILENUM_MAX][FILENAM_MAX], text[CHAR_MAX], question[QUESTION_SIZE], pass[MAX_PASS_SIZE+1];
 
     while (menuChoice != 7){
         topBox("MENU", 1);
@@ -31,7 +31,7 @@ int main()
                     sprintf(question, "Digite a opcao referente ao arquivo desejado (1-%d): ", MIN(FILENUM_MAX, fileNumTotal));
                     fileChoice = chooseValue(question, MIN(FILENUM_MAX, fileNumTotal));
                     printf("Arquivo [%s] selecionado.", files[fileChoice-1]);
-                    lineTotal = readFile(text, files[fileChoice-1]);
+                    charTotal = readFile(text, files[fileChoice-1]);
                 }else{
                     printf("Nenhum arquivo foi encontrado. ");
                 }
@@ -41,7 +41,7 @@ int main()
                 topBox("VISUALIZAR", 2);
                 printf("\n");
                 if (fileChoice != 0){
-                    showText(text, lineTotal);
+                    showText(text, charTotal);
                     printf("\n");
                     blankLine(2);
                     printf("O arquivo [%s] foi exibido. ", files[fileChoice-1]);
@@ -54,13 +54,13 @@ int main()
                 topBox("CRIPTOGRAFAR", 2);
                 if(fileChoice == 0){
                     printf("Nenhum arquivo foi selecionado. ");
-                }else if(lineTotal == 0){
+                }else if(charTotal == 0){
                     printf("Nenhum texto encontrado no arquivo. ");
                 }else{
                     createPass(pass);
                     passToTable(pass, matrix);
                     makeInvertible(matrix);
-                    crypt(text, lineTotal, matrix);
+                    crypt(text, charTotal, matrix);
                     //TODO: criptografar texto, salvar arquivo.
                 }
                 printf("\n");
@@ -70,14 +70,14 @@ int main()
                 topBox("DESCRIPTOGRAFAR", 2);
                 if(fileChoice == 0){
                     printf("Nenhum arquivo foi selecionado. ");
-                }else if(lineTotal == 0){
+                }else if(charTotal == 0){
                     printf("Nenhum texto encontrado no arquivo. ");
                 }else{
                     createPass(pass);
                     passToTable(pass, matrix);
                     makeInvertible(matrix);
                     invert(matrix,determinant(matrix),matrixInv);
-                    crypt(text, lineTotal, matrixInv);
+                    crypt(text, charTotal, matrixInv);
                     //TODO: descriptografar texto; salvar arquivo.
                 }
                 waitPress();
