@@ -11,7 +11,7 @@ void dashLine(int linesNum){
 }
 
 void closedTextLine(const char uiText[], int align){
-    int i, textSize=strlen(uiText), spaces, isOdd=0;
+    int textSize=strlen(uiText), spaces, isOdd=0;
     switch(align){
         case -1:
             printf("%c  %s%*c", SIDE_CHAR, uiText, UI_SIZE-textSize-3, SIDE_CHAR);
@@ -65,7 +65,7 @@ void waitPress(void){
     getchar();
 }
 
-void setValidStr(const char uiText[], const char warning[], char str[], int (* validFunction)(char str[])){
+void setValidStr(const char uiText[], const char warning[], char str[], int (* validFunction)(char str[])){ //TODO: strLimit?
     int isInvalid = 1;
     while(isInvalid){
         printf(uiText);
@@ -78,16 +78,20 @@ void setValidStr(const char uiText[], const char warning[], char str[], int (* v
 
 void splitTextLine(const char text[]){
     int start, end, textSize = strlen(text), i;
-    for(start=0, end=UI_SIZE; start<textSize; start+=(end-start), end+=UI_SIZE){
+    for(start=0, end=UI_SIZE-2; start<textSize; start+=((end-start)+1), end+=UI_SIZE-2){
         if(end >= textSize){
             for(i=start; i<textSize; i++)
                 putchar(text[i]);
         }else{
             while(end>start && text[end] != ' ') end--;
-            for(i=start; i<=end; i++)
-                putchar(text[i]);
+            for(i=start; i<=end; i++){
+                if(text[i] == '\n'){
+                    end = i;
+                    break;
+                }else putchar(text[i]);
+            }
             putchar('\n');
-            end++;
         }
     }
+    puts("\n");
 }

@@ -44,7 +44,7 @@ int main()
                 dashLine(2);
                 isCreated = createText(fileName);
                 if(isCreated==-2){
-                    fprintf(stderr, "Arquivo [%s] pode ser criado na pasta [%s]!", fileName, FOLDER);
+                    fprintf(stderr, "Arquivo [%s] nao pode ser criado na pasta [%s]!", fileName, FOLDER);
                 }else if(isCreated>=0){
                     strcpy(files[0], fileName);
                     fileChoice = 0;
@@ -71,7 +71,7 @@ int main()
                     fileChoice = (chooseItem(uiText, fileNumTotal-fileNumOver))-1;
                     if(testRead(readFile(&text, files[fileChoice]))){
                         isTextCripto = isFileCripto = testCripto(text);
-                        printf(uiText, "Arquivo [%s] selecionado\n", files[fileChoice]);
+                        printf("Arquivo [%s] selecionado\n", files[fileChoice]);
                     }
                 }else{
                     dashLine(1);
@@ -83,11 +83,10 @@ int main()
                 topBox(MAIN_MENU_ITEMS[menuChoice-1], 2);
                 if(testText(fileChoice, text)){
                     putchar('\n');
-                    if(!isTextCripto){
-                        splitTextLine(text);
-                        puts("\b ");
-                    }else puts(text);
-                    putchar('\n');
+                    if(isTextCripto){
+                        printf("%s", text);
+                        puts("\b \n");
+                    }else splitTextLine(text);
                     dashLine(2);
                     printf("O arquivo [%s]%s foi exibido.\n", files[fileChoice], isTextCripto?" criptografado":isFileCripto?" descriptografado":"");
                 }

@@ -443,7 +443,7 @@
 
 1458875097 d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.0b\cripto.h
 
-1458875852 source:d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.0b\main.c
+1459119586 source:d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.0b\main.c
 	<stdio.h>
 	<string.h>
 	"interface.h"
@@ -468,4 +468,64 @@
 	<stdlib.h>
 	<string.h>
 	"interface.h"
+
+1458872448 source:d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.1b\cripto.c
+	<ctype.h>
+	<string.h>
+	"cripto.h"
+
+1458875097 d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.1b\cripto.h
+
+1458892723 source:d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.1b\interface.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"interface.h"
+
+1458892822 d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.1b\interface.h
+
+1459119781 source:d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.1b\main.c
+	<stdio.h>
+	<string.h>
+	"interface.h"
+	"textio.h"
+	"cripto.h"
+
+1458683094 d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.1b\textio.h
+
+1458683360 source:d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.1b\textio.c
+	<stdio.h>
+	<stdlib.h>
+	<dirent.h>
+	<ctype.h>
+	<string.h>
+	<assert.h>
+	"textio.h"
+
+1458872448 source:d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.2b\cripto.c
+	<ctype.h>
+	<string.h>
+	"cripto.h"
+
+1458875097 d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.2b\cripto.h
+
+1458683360 source:d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.2b\textio.c
+	<stdio.h>
+	<stdlib.h>
+	<dirent.h>
+	<ctype.h>
+	<string.h>
+	<assert.h>
+	"textio.h"
+
+1458683094 d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.2b\textio.h
+
+1459674305 source:d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.2b\main.c
+	<stdio.h>
+	<string.h>
+	"interface.h"
+	"textio.h"
+	"cripto.h"
+
+1459673787 d:\computação\linguagens\c\unip\aps - criptografia\aps v2.4.2b\interface.h
 

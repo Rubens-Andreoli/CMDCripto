@@ -1,6 +1,6 @@
 #ifndef INTERFACE_H_INCLUDED
 #define INTERFACE_H_INCLUDED
-//version 3.0
+//version 3.1
 
 /* ---- Definições gerais ---- */
 #define UI_SIZE 80           /*Tamanho máximo de caracteres de uma linha.*/
