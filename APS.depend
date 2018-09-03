@@ -1,0 +1,22 @@
+# depslib dependency file v1.0
+1446665500 source:f:\aps\aps\main.c
+	<stdio.h>
+	<stdlib.h>
+	"interface.h"
+	"filesio.h"
+
+1446662796 f:\aps\aps\filesio.h
+	<dirent.h>
+	<string.h>
+
+1446178454 source:i:\aps\aps\main.c
+	<stdio.h>
+	<stdlib.h>
+	"filesio.h"
+
+1446179044 i:\aps\aps\filesio.h
+	<dirent.h>
+
+1446664726 f:\aps\aps\interface.h
+	<string.h>
+
