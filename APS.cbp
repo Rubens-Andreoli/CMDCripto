@@ -31,16 +31,21 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="cripto.h">
-			<Option target="Release" />
+		<Unit filename="cripto.c">
+			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="filesio.h">
-			<Option target="Release" />
+		<Unit filename="cripto.h" />
+		<Unit filename="interface.c">
+			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="interface.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="textio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="textio.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

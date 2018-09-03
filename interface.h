@@ -1,99 +1,35 @@
-#include <string.h>
+#ifndef INTERFACE_H_INCLUDED
+#define INTERFACE_H_INCLUDED
+//version 2.1
 
-#define UI_SIZE 80
-#define UI_TEXT_SIZE 30
-#define UI_QSTN_SIZE 60
-#define SIDE_CHAR 186
-#define LINE_CHAR 205
-#define MENU_MAX_ITEMS 20
-#define MENU_ALIGN -1
+#define UI_SIZE 80           /*Tamanho máximo de caracteres de uma linha.*/
+#define UI_TEXT_SIZE 64+1    /*Número máximo de caracteres em uma linha.*/ //[textio FILES_NAMEXT_MAX]
+#define SIDE_CHAR 186        /*Caractere utilizado para linhas verticais.*/
+#define DASH_CHAR 205        /*Caractere utilizado para linhas horizontais.*/
+#define MENU_ALIGN -1        /*Alinhamento das linhas encapsuladas do menu.*/
+#define TOP_ALIGN 0          /*Alinhamento da linha encapsulada do título. -1:esquerda/ 0:centralizado/ 1:direita*/
+#define MENU_MAX_ITEMS 15    /*Número máximo de itens no menu.*/
 
-/**Cria a quantidade desejada de linhas horizontais.*/
-void BlankLine(int linesNum){
-    int lines, chars;
-    for(lines=0; lines<linesNum; lines++){
-        for(chars=0; chars<UI_SIZE; chars++)
-            printf("%c", LINE_CHAR);
-    }
-}
+/**Limita caracteres de uiText[] impresso ao valor de UI_TEXT_SIZE.*/
+void limitPrint(const char uiText[]);
 
-/**Cria linha com texto encapsulado com alinhamento desejado
-* (1:esquerda; 0:centralizado; 1:direita).*/
-void TextLine(char text[UI_TEXT_SIZE], int pos){
-    int i, spaces, isOdd=0, textSize=strlen(text);
-    switch(pos){
-        case -1:
-            printf("%c  ", SIDE_CHAR);
-            printf("%s", text);
-            spaces=UI_SIZE-textSize-4;
-            for(i=0; i<spaces; i++)
-                printf(" ");
-            printf("%c", SIDE_CHAR);
-            break;
-        case 0:
-            if(textSize%2!=0){
-                textSize++;
-                isOdd=1;
-            }
-            spaces=(UI_SIZE-2-textSize)/2;
-            printf("%c", SIDE_CHAR);
-            for(i=0; i<spaces; i++)
-                printf(" ");
-            printf("%s", text);
-            for(i=0; i<spaces+isOdd; i++)
-                printf(" ");
-            printf("%c", SIDE_CHAR);
-            break;
-        case 1:
-            printf("%c", SIDE_CHAR);
-            spaces=UI_SIZE-textSize-4;
-            for(i=0; i<spaces; i++)
-                printf(" ");
-            printf("%s", text);
-            printf("  %c", SIDE_CHAR);
-            break;
-    }
-}
+/**Exibe a quantidade linesNum de linhas horizontais com o caractere DASH_CHAR repetido UI_SIZE vezes.*/
+void dashLine(int linesNum);
 
-/**Cria título centralizado com o texto desejado.*/
-void TopBox(char text[UI_TEXT_SIZE], int bottomLines){
-    system("cls");
-    BlankLine(1);
-    TextLine(text, 0);
-    BlankLine(bottomLines);
-}
+/**Exibe linha com texto uiText[] encapsulado pelo caractere SIDE_CHAR com alinhamento align (-1:esquerda/0:centralizado/1:direita).*/
+void closedTextLine(const char uiText[], int align);
 
-/**Cria menu com itens desejados.*/
-void FillMenu(char menuItems[MENU_MAX_ITEMS][UI_TEXT_SIZE],
-              int numItens, int isExit){
-    int i;
-    char menuItem[UI_TEXT_SIZE+10];
-    for(i=0;i<numItens;i++){
-        sprintf(menuItem, "%2d - %s", i+1, menuItems[i]);
-        TextLine(menuItem, MENU_ALIGN);
-    }
-    if(isExit==1){
-        sprintf(menuItem, "%2d - SAIR", i+1);
-        TextLine(menuItem, MENU_ALIGN);
-    }
-    BlankLine(2);
-}
+/**Limpa a tela, e cria título centralizado com uiText[] desejado, e número de linhas horizontais, inferiores, indicado em bottomLines.*/
+void topBox(const char uiText[], int bottomLines);
 
-/**Repete uma questão até que o valor da opção digitada seja válida.
-Retorna: [valor escolhido pelo usuário].*/
-int ChooseValue(char question[UI_QSTN_SIZE], int valueMax){
-    int choice=0;
-    do{
-        printf("%s", question);
-        fflush(stdin);
-        scanf("%d", &choice);
-    }while((choice<1) || (choice>valueMax));
-    return choice;
-}
+/**Exibe menu com o número de itens indicado (ou no máximo MENU_MAX_ITEMS) com os itens de menuItems[][], e com opção sair se indicado.*/
+void fillMenu(const char menuItems[][UI_TEXT_SIZE], int numItens, int addExit);
 
-/**Espera que uma tecla seja pressionada para continuar a execução.*/
-void WaitPress(void){
-    printf("Pressione qualquer tecla para voltar.\n");
-    fflush(stdin);
-    getchar();
-}
+/**Repete questão uiText[] até que o valor da opção do menu digitada seja válida (de 1 ao valor itemMax).
+*Retorna: [valor escolhido pelo usuário].*/
+int chooseItem(const char uiText[], int itemMax);
+
+/**Exibe uma mensagem, emite um sinal sonoro, e espera que uma tecla seja pressionada para continuar a execução.*/
+void waitPress(void);
+
+#endif /* INTERFACE_H_INCLUDED */

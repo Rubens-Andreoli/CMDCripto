@@ -1,57 +1,29 @@
+#ifndef CRIPTO_H_INCLUDED
+#define CRIPTO_INCLUDED
+//version 1.0
+
+#define PASS_MIN 4          /*Número mínimo de caracteres da senha.*/
+#define PASS_MAX 9+1        /*Número máximo de caracteres da senha + \0.*/
+
+/*Alfabeto de caracteres válidos para utilização na criptografia e seu número de caracteres:*/
 #define ALPHABET " !#$%&()*+,-./:;ABCDEFGHIJKLMNOPQRSTUVWXYZ<=>?@|^0123456789[]{}abcdefghijklmnopqrstuvwxyz"
-#define ALPHABET_SIZE 89
-#define MIN_PASS_SIZE 4
-#define MAX_PASS_SIZE 9
+#define ALPHABET_SIZE 89 //número primo para evitar conflito nos cálculos de módulo.
 
-/**Repete pedido de senha até que esta seja válida.*/
-void GetPass(char pass[MAX_PASS_SIZE+1]){
-    do{
-        printf("Digite uma senha de %d-%d digitos: ", MIN_PASS_SIZE, MAX_PASS_SIZE);
-        fflush(stdin);
-        fgets(pass, MAX_PASS_SIZE+1, stdin);
-        strtok(pass, "\n");
-    }while(strlen(pass)<MIN_PASS_SIZE);
-}
+/**Repete questão e preenche pass[] com senha válida, maior que PASS_MIN e menor que PASS_MAX.*/
+void setPass(char pass[]);
 
-/**Converte caractere em inteiro.
+/**Converte caractere em inteiro de acordo com a posição no ALPHABET.
 Retorna: [inteiro representativo do char].*/
-int CharToInt(char letter){
-    int pos;
-    for(pos=0; pos<=ALPHABET_SIZE-1; pos++){
-        if(letter==ALPHABET[pos])
-            return pos;
-    }
-    return 0;
-}
+int charToInt(char letter);
 
-/**Criptografa o texto utilizando a cifra de vigenere.*/
-void Encrypt(char text[LINE_MAX][CHAR_MAX], int lineTotal, char pass[MAX_PASS_SIZE+1]){
-    int line, pos, charsLine, passLenght=strlen(pass);
-    for(line=0; line<lineTotal; line++){
-        charsLine=strlen(text[line]);
-        for(pos=0; pos<charsLine; pos++)
-            text[line][pos]=ALPHABET[(CharToInt(text[line][pos])+CharToInt(pass[pos%passLenght]))%ALPHABET_SIZE];
-        if(line==lineTotal-1)
-            text[line][charsLine]='~';
-    }
-}
+/**Criptografa text[] utilizando a cifra de vigenere.*/
+void encrypt(char text[], const char pass[]);
 
-/**Descriptografa o texto utilizando a cifra de vigenere.*/
-void Decrypt(char text[LINE_MAX][CHAR_MAX], int lineTotal, char pass[CHAR_MAX]){
-    int line, pos, charsLine, passLenght=strlen(pass);
-    for(line=0;line<lineTotal; line++){
-        charsLine=strlen(text[line]);
-        for(pos=0; pos<charsLine; pos++)
-            text[line][pos]=ALPHABET[((CharToInt(text[line][pos])-CharToInt(pass[pos%passLenght]))+ALPHABET_SIZE)%ALPHABET_SIZE];
-        if(line==lineTotal-1)
-            text[line][charsLine-1]=' ';
-    }
-}
+/**Descriptografa text[] utilizando a cifra de vigenere.*/
+void decrypt(char text[], const char pass[]);
 
-/**Testa se texto está criptografado.
+/**Testa se text[] está criptografado.
 Retorna: 0[não é criptografado]; 1[é criptografado].*/
-int TestCripto(char text[LINE_MAX][CHAR_MAX], int lineTotal){
-    if(text[lineTotal-1][strlen(text[lineTotal-1])-1]=='~')
-        return 1;
-    return 0;
-}
+int testCripto(const char text[]);
+
+#endif /* CRIPTO_H_INCLUDED */
