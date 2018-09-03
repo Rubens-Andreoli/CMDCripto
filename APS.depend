@@ -54,14 +54,14 @@
 
 1446904936 j:\aps\aps\cripto.h
 
-1447175015 source:c:\users\morus\desktop\aps v2.1\main.c
+1447266757 source:c:\users\morus\desktop\aps v2.1\main.c
 	<stdio.h>
 	<stdlib.h>
 	"interface.h"
 	"filesio.h"
 	"cripto.h"
 
-1447170240 c:\users\morus\desktop\aps v2.1\interface.h
+1447266472 c:\users\morus\desktop\aps v2.1\interface.h
 	<string.h>
 
 1447175294 c:\users\morus\desktop\aps v2.1\filesio.h
@@ -69,48 +69,48 @@
 
 1447169454 c:\users\morus\desktop\aps v2.1\cripto.h
 
-1447175016 source:f:\aps\aps v2.1\main.c
+1447268414 source:c:\users\morus\desktop\aps v2.2 [off]\main.c
 	<stdio.h>
 	<stdlib.h>
 	"interface.h"
 	"filesio.h"
 	"cripto.h"
 
-1447170240 f:\aps\aps v2.1\interface.h
+1447268191 c:\users\morus\desktop\aps v2.2 [off]\interface.h
 	<string.h>
 
-1447175296 f:\aps\aps v2.1\filesio.h
+1447175294 c:\users\morus\desktop\aps v2.2 [off]\filesio.h
 	<dirent.h>
 
-1447169454 f:\aps\aps v2.1\cripto.h
+1447169454 c:\users\morus\desktop\aps v2.2 [off]\cripto.h
 
-1447268885 source:c:\users\morus\desktop\aps v2.1.0\main.c
+1447268496 source:c:\users\morus\desktop\aps v2.1.1 [off]\main.c
 	<stdio.h>
 	<stdlib.h>
 	"interface.h"
 	"filesio.h"
 	"cripto.h"
 
-1447170240 c:\users\morus\desktop\aps v2.1.0\interface.h
+1447268464 c:\users\morus\desktop\aps v2.1.1 [off]\interface.h
 	<string.h>
 
-1447295802 c:\users\morus\desktop\aps v2.1.0\filesio.h
+1447175294 c:\users\morus\desktop\aps v2.1.1 [off]\filesio.h
 	<dirent.h>
 
-1447295728 c:\users\morus\desktop\aps v2.1.0\cripto.h
+1447169454 c:\users\morus\desktop\aps v2.1.1 [off]\cripto.h
 
-1447268885 source:d:\computação\linguagens\c\aps - criptografia\aps v2.1.0\main.c
+1447268496 source:d:\computação\linguagens\c\aps - criptografia\aps v2.0.2 [off]\main.c
 	<stdio.h>
 	<stdlib.h>
 	"interface.h"
 	"filesio.h"
 	"cripto.h"
 
-1447170240 d:\computação\linguagens\c\aps - criptografia\aps v2.1.0\interface.h
+1447268464 d:\computação\linguagens\c\aps - criptografia\aps v2.0.2 [off]\interface.h
 	<string.h>
 
-1447295802 d:\computação\linguagens\c\aps - criptografia\aps v2.1.0\filesio.h
+1447175294 d:\computação\linguagens\c\aps - criptografia\aps v2.0.2 [off]\filesio.h
 	<dirent.h>
 
-1447295728 d:\computação\linguagens\c\aps - criptografia\aps v2.1.0\cripto.h
+1447169454 d:\computação\linguagens\c\aps - criptografia\aps v2.0.2 [off]\cripto.h
 

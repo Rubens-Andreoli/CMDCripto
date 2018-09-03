@@ -1,11 +1,12 @@
 #include <string.h>
 
 #define UI_SIZE 80
-#define UI_TEXT_SIZE 30
+#define UI_TEXT_SIZE 40
 #define SIDE_CHAR 186
 #define LINE_CHAR 205
 #define QUESTION_SIZE 60
 #define MENU_ALIGN -1
+#define MENU_NUM_ITEMS 6
 
 /**Cria a quantidade desesaja de linhas horizontais.*/
 void blankLine(int linesNum){
@@ -60,6 +61,18 @@ void topBox(char text[UI_TEXT_SIZE], int bottomLines){
     blankLine(1);
     textLine(text, 0);
     blankLine(bottomLines);
+}
+
+void fillMenu(char menuItems[MENU_NUM_ITEMS][UI_TEXT_SIZE-10]){
+    int i;
+    char menuItem[UI_TEXT_SIZE];
+    for(i=0;i<MENU_NUM_ITEMS;i++){
+        sprintf(menuItem, "%d - %s", i+1, menuItems[i]);
+        textLine(menuItem, MENU_ALIGN);
+    }
+    sprintf(menuItem, "%d - SAIR", i+1);
+    textLine(menuItem, MENU_ALIGN);
+    blankLine(2);
 }
 
 /**Repete uma questão até que o valor da opção digitada seja válida.*/

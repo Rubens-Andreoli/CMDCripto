@@ -1,8 +1,8 @@
 #include <dirent.h>
 
-#define BAN_LETTERS "àáâãÀÁÂÃèéêÈÉÊìíîÌÍÎòóôõÒÓÔÕúùûüÙÚÛÜç"
-#define OK_LETTERS  "aaaaAAAAeeeEEEiiiIIIooooOOOOuuuuUUUUc"
-#define LETTERS_SIZE 37
+#define banLetters "àáâãÀÁÂÃèéêÈÉÊìíîÌÍÎòóôõÒÓÔÕúùûüÙÚÛÜç"
+#define okLetters  "aaaaAAAAeeeEEEiiiIIIooooOOOOuuuuUUUUc"
+#define LettersSize 37
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define FOLDER "./texts/"
 #define FILENAM_MAX 50
@@ -34,16 +34,16 @@ int readFolder(char files[FILENUM_MAX][FILENAM_MAX]){
     return fileNum;
 }
 
-/**Remove quebra de linha e acentuacao do texto.*/
+/**Remove quebra de linha e acentuação do texto.*/
 void clearText(char text[LINE_MAX][CHAR_MAX], int lineTotal){
     int line, pos, i,charsLine;
     for(line=0; line<=lineTotal;line++){
         strtok(text[line], "\n");
         charsLine = strlen(text[line]);
         for(pos=0;pos<=charsLine-1;pos++){
-            for(i=0;i<=LETTERS_SIZE;i++){
-                if(text[line][pos] == BAN_LETTERS[i])
-                    text[line][pos] = OK_LETTERS[i];
+            for(i=0;i<=LettersSize;i++){
+                if(text[line][pos] == banLetters[i])
+                    text[line][pos] = okLetters[i];
             }
         }
     }

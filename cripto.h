@@ -5,12 +5,14 @@
 
 /**Repete pedido de senha até que esta seja válida.*/
 void getPass(char pass[MAX_PASS_SIZE+1]){
+    int lenght;
     do{
         printf("Digite uma senha de %d-%d digitos: ", MIN_PASS_SIZE, MAX_PASS_SIZE);
         fflush(stdin);
         fgets(pass, MAX_PASS_SIZE+1, stdin);
         strtok(pass, "\n");
-    }while(strlen(pass)<MIN_PASS_SIZE);
+        lenght=strlen(pass);
+    }while(lenght<MIN_PASS_SIZE);
 }
 
 /**Converte caractere retornando inteiro.*/
